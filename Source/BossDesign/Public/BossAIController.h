@@ -6,9 +6,6 @@
 #include "AIController.h"
 #include "BossAIController.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class BOSSDESIGN_API ABossAIController : public AAIController
 {
@@ -27,4 +24,8 @@ private :
 
 	UFUNCTION()
 	void OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus);
+
+	bool bIsCheckWakeUp = false;
+
+	class AEnemy_Boss* boss;
 };

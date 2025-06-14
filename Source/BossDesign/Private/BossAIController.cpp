@@ -10,6 +10,7 @@
 
 #include "Enemy_Boss.h"
 #include "BossDesignCharacter.h"
+#include "Boss_HealthWidget.h"
 
 /** -------------------------------------------------------------------------- */
 
@@ -22,7 +23,9 @@ void ABossAIController::OnPossess(APawn* inPawn)
 {
 	Super::OnPossess(inPawn);
 
-	if(AEnemy_Boss* const boss = Cast<AEnemy_Boss>(inPawn))
+	boss = Cast<AEnemy_Boss>(inPawn);
+
+	if(boss)
 	{
 		if(UBehaviorTree* const bossTree = boss->GetBehaviorTree())
 		{
@@ -57,8 +60,16 @@ void ABossAIController::SetupPerceptionSystem()
 
 void ABossAIController::OnTargetDetected(AActor *Actor, FAIStimulus const Stimulus)
 {
-	if(auto* const ch = Cast<ABossDesignCharacter>(Actor))
+	if(auto* const player = Cast<ABossDesignCharacter>(Actor))
 	{
 		GetBlackboardComponent()->SetValueAsBool("canSeePlayer", Stimulus.WasSuccessfullySensed());
+		
+		if(!bIsCheckWakeUp)
+		{
+			player->SetBossWidget(boss);
+			player->GetBossInstance(boss);
+
+			bIsCheckWakeUp = true;
+		}
 	}
 }

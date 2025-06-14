@@ -11,7 +11,7 @@ AEnemy_Boss::AEnemy_Boss()
 void AEnemy_Boss::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 UBehaviorTree *AEnemy_Boss::GetBehaviorTree() const
