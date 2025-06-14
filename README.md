@@ -45,15 +45,6 @@
 - FPhaseData 구조체 기반 연출 데이터 통합 (WIP)
 <br>
 
-## 🧪 Troubleshooting 기록
-
-| 날짜 | 내용 |
-|------|------|
-| 2025.06.14 | `SetBossInstance()` 내부 변수 대입 오류로 인해 BossWidget에 정보 미출력 / 방향 수정 후 해결 |
-| 2025.06.14 | `BTService_PhaseCheck`가 작동하지 않던 원인 → `ObserverAborts` 누락으로 Decorator 반응 없음 → Self/Both 설정 후 해결 |
-| 2025.06.14 | BTTask 재사용 전략 논의 → 기능이 동일하면 분기 처리, 구조가 다르면 분리하는 기준 확립 |
-<br>
-
 ## 🗂️ 현재 상태
 
 - [x] Behavior Tree Phase 구조 정리
