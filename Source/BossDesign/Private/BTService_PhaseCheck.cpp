@@ -37,12 +37,15 @@ void UBTService_PhaseCheck::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* N
     if(!bossBlackBoard) return;
 
     float curPercent = boss->GetHealthPercent(); //(100 ~ 0.f Percent)
-    EPhaseType curPhase;
 
-    if(curPercent > 0.6f) curPhase = EPhaseType::Phase1;
-    else if (curPercent > 0.3f) curPhase = EPhaseType::Phase2;
-    else if (curPercent <= 0.3f) curPhase = EPhaseType::Phase3;
+    //Start Phase1 Fixed
+    EPhaseType curPhase = EPhaseType::Phase1;
 
+    if(curPercent > 0.6f)         curPhase = EPhaseType::Phase1;
+    else if (curPercent > 0.3f)   curPhase = EPhaseType::Phase2;
+    else if (curPercent <= 0.3f)  curPhase = EPhaseType::Phase3;
 
-    bossBlackBoard->SetValueAsInt("PhaseKey", static_cast<uint8>(curPhase));
+    EPhaseType setPhase = curPhase;
+    
+    bossBlackBoard->SetValueAsInt("PhaseKey", static_cast<uint8>(setPhase));
 }

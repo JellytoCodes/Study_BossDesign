@@ -78,6 +78,8 @@ void ABossDesignCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 		EnhancedInputComponent->BindAction(checkBossPhase1, ETriggerEvent::Started, this, &ABossDesignCharacter::curBossPhase1);
 		EnhancedInputComponent->BindAction(checkBossPhase2, ETriggerEvent::Started, this, &ABossDesignCharacter::curBossPhase2);
 		EnhancedInputComponent->BindAction(checkBossPhase3, ETriggerEvent::Started, this, &ABossDesignCharacter::curBossPhase3);
+		EnhancedInputComponent->BindAction(checkBossStunned, ETriggerEvent::Started, this, &ABossDesignCharacter::curBossStunned);
+		EnhancedInputComponent->BindAction(checkBossDeath, ETriggerEvent::Started, this, &ABossDesignCharacter::curBossDeath);
 	}
 }
 
@@ -111,7 +113,7 @@ void ABossDesignCharacter::Look(const FInputActionValue& Value)
 
 void ABossDesignCharacter::curBossPhase1()
 {
-	if(!bossInstance && bossWidgetInstance) return;
+	if(!bossInstance || !bossWidgetInstance) return;
 
 	float curHealth = FMath::RandRange(61, 100);
 
@@ -121,7 +123,7 @@ void ABossDesignCharacter::curBossPhase1()
 
 void ABossDesignCharacter::curBossPhase2()
 {
-	if(!bossInstance && !bossWidgetInstance) return;
+	if(!bossInstance || !bossWidgetInstance) return;
 
 	float curHealth = FMath::RandRange(31, 60);
 
@@ -131,12 +133,29 @@ void ABossDesignCharacter::curBossPhase2()
 
 void ABossDesignCharacter::curBossPhase3()
 {
-	if(!bossInstance && bossWidgetInstance) return;
+	if(!bossInstance || !bossWidgetInstance) return;
 
 	float curHealth = FMath::RandRange(1, 30);
 
 	bossInstance->SetCurHealth(curHealth);
 	bossWidgetInstance->UpdatedBossHealth();
+}
+
+void ABossDesignCharacter::curBossStunned()
+{
+	if(!bossInstance || !bossWidgetInstance) return;
+
+	bossInstance->WeaknessDestroy();
+}
+
+void ABossDesignCharacter::curBossDeath()
+{
+	if(!bossInstance || !bossWidgetInstance) return;
+
+	bossInstance->BossDead(bIsBossDeath);
+	
+	if(bIsBossDeath) bIsBossDeath = false;
+	else bIsBossDeath = true;	
 }
 
 void ABossDesignCharacter::SetBossWidget(AEnemy_Boss *inBoss)

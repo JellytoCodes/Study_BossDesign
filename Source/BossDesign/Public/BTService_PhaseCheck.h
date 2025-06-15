@@ -26,4 +26,6 @@ public :
 private :
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PhaseCheck", meta = (AllowPrivateAccess = "true"))
 	float checkPhasePercent = 0.5f;
+
+	bool bIsPhaseSwap = false;
 };

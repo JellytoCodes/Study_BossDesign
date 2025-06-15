@@ -55,12 +55,22 @@ private :
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* checkBossPhase3;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* checkBossStunned;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* checkBossDeath;
+
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 
 	void curBossPhase1();
 	void curBossPhase2();
 	void curBossPhase3();
+	void curBossStunned();
+	void curBossDeath();
+
+	bool bIsBossDeath = true;
 
 	AEnemy_Boss* bossInstance;
 	

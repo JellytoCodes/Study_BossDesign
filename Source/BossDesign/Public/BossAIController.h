@@ -14,10 +14,9 @@ class BOSSDESIGN_API ABossAIController : public AAIController
 public :
 	explicit ABossAIController(FObjectInitializer const& ObjectInitializer);
 
-protected :
+private :
 	virtual void OnPossess(APawn* inPawn) override;
 
-private :
 	class UAISenseConfig_Sight* sightConfig;
 
 	void SetupPerceptionSystem();

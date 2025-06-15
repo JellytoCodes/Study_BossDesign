@@ -17,10 +17,9 @@ public:
 	AEnemy_Boss();
 	UBehaviorTree* GetBehaviorTree() const;
 
-protected:
+private :
 	virtual void BeginPlay() override;
 
-private :
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	UBehaviorTree* bossTree;
 
@@ -31,10 +30,18 @@ private :
 	float curHealth = 0.f;
 
 public :
-
 	float GetMaxHealth() const { return maxHealth; }
 	float GetCurHealth() const { return curHealth; }
 	void SetCurHealth(float setHealth) { curHealth = setHealth; }
 
 	float GetHealthPercent() const { return curHealth / maxHealth; }
+
+	void WeaknessDestroy();
+	void EndStun();
+
+	void BossDead(bool isDeath);
+
+	bool bIsDeath = false;
+
+	FTimerHandle stunnedTimer;
 };
