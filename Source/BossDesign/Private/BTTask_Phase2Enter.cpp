@@ -33,7 +33,6 @@ EBTNodeResult::Type UBTTask_Phase2Enter::ExecuteTask(UBehaviorTreeComponent &Own
 
     if(!OwnerComp.GetBlackboardComponent()->GetValueAsBool("bIsPhase2Transition"))
     {
-        //boss->PlayAnimMontage(phaseTransitionAnim, animPlayRate);
         UE_LOG(LogTemp, Warning, TEXT("Boss is Phase2 Transition"));
         OwnerComp.GetBlackboardComponent()->SetValueAsBool("bIsPhase2Transition", true);
     }

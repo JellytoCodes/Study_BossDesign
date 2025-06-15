@@ -17,11 +17,4 @@ class BOSSDESIGN_API UBTTask_Phase2Enter : public UBTTask_BlackboardBase
 public : 
 	explicit UBTTask_Phase2Enter(FObjectInitializer const& ObjectInitializer);
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;	
-
-private :
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation", meta = (AllowPrivateAccess = "true"))
-	class UAnimMontage* phaseTransitionAnim;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation", meta = (AllowPrivateAccess = "true"))
-	float animPlayRate = 1.f;
 };
