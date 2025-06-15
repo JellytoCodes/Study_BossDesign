@@ -21,7 +21,7 @@ void UBoss_HealthWidget::NativeConstruct()
 
 void UBoss_HealthWidget::UpdatedBossName()
 {
-	bossName->SetText(FText::FromString("Destroyer"));
+	bossName->SetText(FText::FromString("Fighter"));
 }
 
 void UBoss_HealthWidget::UpdatedBossHealth()
