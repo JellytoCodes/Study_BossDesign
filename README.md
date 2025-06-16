@@ -45,13 +45,13 @@ BehaviorTree를 활용하여 보스 캐릭터의 전투 패턴을 **Phase** 단�
 
 ## ⚔️ 전투 중 상태 변화 처리
 
-Groggy 상태:
-약점 공격 또는 누적 데미지 발생 시 AIController에서 강제 전환
-→ bIsGroggy Blackboard Key로 BT 차단
-→ 상태 회복 후 다시 루트 트리 진입 가능
-
-Death 처리:
-HP가 0이 되면 BT 내부 트리를 완전히 변경
-애니메이션 및 연출 종료 후 Pawn Destroy 가능
+Groggy 상태:  
+약점 공격 또는 누적 데미지 발생 시 AIController에서 강제 전환  
+→ bIsGroggy Blackboard Key로 BT 차단  
+→ 상태 회복 후 다시 루트 트리 진입 가능  
+  
+Death 처리:  
+HP가 0이 되면 BT 내부 트리를 완전히 변경  
+애니메이션 및 연출 종료 후 Pawn Destroy 가능  
 
 
