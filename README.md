@@ -12,43 +12,46 @@ BehaviorTree를 활용하여 보스 캐릭터의 전투 패턴을 **Phase** 단�
 
 ### ✅ 전체 트리 구성
 
-- WakeUp Phase: 전투 시작 전 애니메이션
-- Phase 트리 (1~3): 체력 비율에 따른 공격 로직 분기
-- Death 트리: 체력 0 상태 전환 처리
+| Phase            | 설명                       |
+| ---------------- | ------------------------ |
+| **WakeUp Phase** | 전투 시작 전 각성 연출            |
+| **Phase 1**      | 체력 100% \~ N% (기본 공격 루프) |
+| **Phase 2**      | 체력 N% \~ M% (패턴 변화)      |
+| **Phase 3**      | 체력 M% 이하 (막타 패턴 등)       |
+| **Death**        | 사망 시 연출 및 행동 종료          |
 
-### ✅ 구조별 담당
+### 🧩 구조별 담당
 
-| 구성 요소 | 설명 |
-|-----------|------|
-| **Service** | `BTService_CheckPhase`: 체력 비율 감지 및 Blackboard에 PhaseKey 설정 |
-| **Task** | `BTTask_PhaseSwapAnimation`: 페이즈 진입 시 애니메이션 재생 |
-| **Decorator** | `BlackboardKey == PhaseX`: Phase 전용 행동 분기 |
-| **Blackboard Key** | `PhaseKey`, `isCombat`, `isGroggy` 등 상태 전환 조건 사용
+| 타입             | 클래스명                                                         | 설명                                   |
+| -------------- | ------------------------------------------------------------ | ------------------------------------ |
+| **Service**    | `UBTService_PhaseCheck`                                      | 보스 체력 퍼센트를 기준으로 `PhaseKey` 값을 업데이트   |
+| **Task**       | `UBTTask_PhaseSwapAnimation`                                 | 해당 Phase 진입 시 애니메이션/연출 재생 후 상태 변경    |
+| **Decorator**  | Blackboard 기반 조건                                             | `BlackboardKey == PhaseX` 조건으로 분기 제어 |
+| **Blackboard** | `PhaseKey`, `isCombat`, `bIsGroggy`, `bIsPhase2Transition` 등 | 상태 조건값 정의 및 활용                       |
 
 <br>
 
 ## 🎬 연출 설계
 
-- `PlayAnimation` Task를 기반으로 **PlayRate**, **Montage 선택** 기능 추가
-- 향후 `LevelSequence` 기반의 시네마틱 전환 구조도 고려 중
-- **모든 연출 Task는 재사용 가능하게 설계**, 보스마다 세부 조정은 UPROPERTY로 설정
+| 항목              | 구현 방식                                             |
+| --------------- | ------------------------------------------------- |
+| **페이즈 진입 연출**   | Task로 구성 (`BTTask_PhaseSwapAnimation`)            |
+| **애니메이션 재생 제어** | `UAnimMontage` + `PlayRate` 조정 가능 (UPROPERTY로 설정) |
+| **재생 조건 제어**    | `Blackboard Bool` 사용하여 1회만 재생 처리                  |
+| **확장 계획**       | `LevelSequence`, Niagara 등도 연출 Task에 포함 예정        |
+
 
 <br>
 
-## 🧱 확장 고려 요소
+## ⚔️ 전투 중 상태 변화 처리
 
-- 약점 시스템 도입 (Groggy)
-- 일정 데미지 누적 → Controller에서 상태 강제 전환
-- BT Decorator로 행동 차단 처리
-- 보스 전용 Subtree 구조화
-- FPhaseData 구조체 기반 연출 데이터 통합 (WIP)
+Groggy 상태:
+약점 공격 또는 누적 데미지 발생 시 AIController에서 강제 전환
+→ bIsGroggy Blackboard Key로 BT 차단
+→ 상태 회복 후 다시 루트 트리 진입 가능
 
-<br>
+Death 처리:
+HP가 0이 되면 BT 내부 트리를 완전히 변경
+애니메이션 및 연출 종료 후 Pawn Destroy 가능
 
-## 🗂️ 현재 상태
 
-- [x] Behavior Tree Phase 구조 정리
-- [x] Phase 체크용 Service 구성
-- [x] 기본 애니메이션 Task 구조
-- [ ] Groggy 상태 연출 처리
-- [ ] PhaseSwap LevelSequence Task 구성
