@@ -54,4 +54,6 @@ Death 처리:
 HP가 0이 되면 BT 내부 트리를 완전히 변경  
 애니메이션 및 연출 종료 후 Pawn Destroy 가능  
 
+## 🧑‍💻 Author  
+JellytoCodes / 2025.06  
 
