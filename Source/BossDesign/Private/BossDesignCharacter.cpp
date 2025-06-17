@@ -80,6 +80,7 @@ void ABossDesignCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 		EnhancedInputComponent->BindAction(checkBossPhase3, ETriggerEvent::Started, this, &ABossDesignCharacter::curBossPhase3);
 		EnhancedInputComponent->BindAction(checkBossStunned, ETriggerEvent::Started, this, &ABossDesignCharacter::curBossStunned);
 		EnhancedInputComponent->BindAction(checkBossDeath, ETriggerEvent::Started, this, &ABossDesignCharacter::curBossDeath);
+		EnhancedInputComponent->BindAction(checkBossBoneBroken, ETriggerEvent::Started, this, &ABossDesignCharacter::curBossBoneBroken);
 	}
 }
 
@@ -156,6 +157,13 @@ void ABossDesignCharacter::curBossDeath()
 	
 	if(bIsBossDeath) bIsBossDeath = false;
 	else bIsBossDeath = true;	
+}
+
+void ABossDesignCharacter::curBossBoneBroken()
+{
+	if(!bossInstance || !bossWidgetInstance) return;
+
+	bossInstance->BreakLeftArm();
 }
 
 void ABossDesignCharacter::SetBossWidget(AEnemy_Boss *inBoss)

@@ -29,6 +29,10 @@ private :
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	float curHealth = 0.f;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "BrokenPoint", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<AActor> dropLeftArmClass;
+
+
 public :
 	float GetMaxHealth() const { return maxHealth; }
 	float GetCurHealth() const { return curHealth; }
@@ -44,4 +48,6 @@ public :
 	bool bIsDeath = false;
 
 	FTimerHandle stunnedTimer;
+
+	void BreakLeftArm();
 };

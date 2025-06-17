@@ -61,6 +61,9 @@ private :
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* checkBossDeath;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* checkBossBoneBroken;
+
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 
@@ -69,6 +72,7 @@ private :
 	void curBossPhase3();
 	void curBossStunned();
 	void curBossDeath();
+	void curBossBoneBroken();
 
 	bool bIsBossDeath = true;
 
