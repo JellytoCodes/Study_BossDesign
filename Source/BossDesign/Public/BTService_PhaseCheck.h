@@ -24,8 +24,8 @@ public :
 	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 	
 private :
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PhaseCheck", meta = (AllowPrivateAccess = "true"))
-	float checkPhasePercent = 0.5f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PhaseCheck", meta = (AllowPrivateAccess = "true"))
+	float checkPhase1Percent = 0.5f;
 
 	bool bIsPhaseSwap = false;
 };
