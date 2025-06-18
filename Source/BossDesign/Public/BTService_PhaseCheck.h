@@ -14,6 +14,21 @@ enum class EPhaseType : uint8
 	Phase3,
 };
 
+USTRUCT(BlueprintType)
+struct FPhaseCheck
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PhaseCheck")
+	float checkMinPercent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PhaseCheck")
+	float checkMaxPercent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PhaseCheck")
+	EPhaseType PhaseType;
+};
+
 UCLASS()
 class BOSSDESIGN_API UBTService_PhaseCheck : public UBTService_BlackboardBase
 {
@@ -25,7 +40,7 @@ public :
 	
 private :
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PhaseCheck", meta = (AllowPrivateAccess = "true"))
-	float checkPhase1Percent = 0.5f;
+	TArray<FPhaseCheck> PhaseCheck;
 
 	bool bIsPhaseSwap = false;
 };

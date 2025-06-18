@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTService_PhaseCheck.h"
+#include "BTService_CheckPlayerDistance.h"
 #include "NavigationSystem.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -11,17 +11,16 @@
 
 #include "BossDesignCharacter.h"
 #include "BossAIController.h"
-#include "Enemy_Boss.h"
 #include "BTTask_ChasePlayer.h"
 
 /** -------------------------------------------------------------------------- */
 
-UBTService_PhaseCheck::UBTService_PhaseCheck()
+UBTService_CheckPlayerDistance::UBTService_CheckPlayerDistance()
 {
-	NodeName = "Check Boss Phase";
+	NodeName = "Check Player Distance";
 }
 
-void UBTService_PhaseCheck::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+void UBTService_CheckPlayerDistance::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
@@ -30,21 +29,21 @@ void UBTService_PhaseCheck::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* N
     if(!bossCon) return;
 
     //Get Boss Pawn
-    AEnemy_Boss* boss = Cast<AEnemy_Boss>(bossCon->GetPawn());
+    APawn* boss = bossCon->GetPawn();
     if(!boss) return;
 
+    //Get Boss BlackboardComponent
     auto* bossBlackBoard = OwnerComp.GetBlackboardComponent();
     if(!bossBlackBoard) return;
 
-    float curPercent = boss->GetHealthPercent(); //(1 ~ 0.f Percent)
+    //Get Player Actor
+    AActor* player = UGameplayStatics::GetPlayerCharacter(boss->GetWorld(), 0);
+    if(!player) return;
 
-    EPhaseType setPhase = EPhaseType::Phase1;
-    
-    for(auto& curPhase : PhaseCheck)
-    {
-        if(curPhase.checkMaxPercent >= curPercent && curPhase.checkMinPercent <= curPercent) setPhase = curPhase.PhaseType;
-        else continue;
-    }
-    
-    bossBlackBoard->SetValueAsInt("PhaseKey", static_cast<uint8>(setPhase));
+    float distance = FVector::Dist(boss->GetActorLocation(), player->GetActorLocation());
+
+    UE_LOG(LogTemp, Warning, TEXT("Dist : %.2f, check Distance : %.2f"), distance, checkDistance);
+
+    if(distance <= checkDistance) bossBlackBoard->SetValueAsBool("bIsInDistance", true);
+    else bossBlackBoard->SetValueAsBool("bIsInDistance", false);
 }

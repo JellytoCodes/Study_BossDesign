@@ -32,6 +32,8 @@ private :
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "BrokenPoint", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AActor> dropLeftArmClass;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "LootWidget", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class UWidgetComponent> lootWidgetComponent;
 
 public :
 	float GetMaxHealth() const { return maxHealth; }

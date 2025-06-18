@@ -11,8 +11,12 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 
+/** -------------------------------------------------------------------------- */
+
 #include "Enemy_Boss.h"
 #include "Boss_HealthWidget.h"
+
+/** -------------------------------------------------------------------------- */
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -81,6 +85,7 @@ void ABossDesignCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 		EnhancedInputComponent->BindAction(checkBossStunned, ETriggerEvent::Started, this, &ABossDesignCharacter::curBossStunned);
 		EnhancedInputComponent->BindAction(checkBossDeath, ETriggerEvent::Started, this, &ABossDesignCharacter::curBossDeath);
 		EnhancedInputComponent->BindAction(checkBossBoneBroken, ETriggerEvent::Started, this, &ABossDesignCharacter::curBossBoneBroken);
+		EnhancedInputComponent->BindAction(checkInteractBoss, ETriggerEvent::Started, this, &ABossDesignCharacter::curBossInteract);
 	}
 }
 
@@ -147,6 +152,7 @@ void ABossDesignCharacter::curBossStunned()
 	if(!bossInstance || !bossWidgetInstance) return;
 
 	bossInstance->WeaknessDestroy();
+	bossInstance->BreakLeftArm();
 }
 
 void ABossDesignCharacter::curBossDeath()
@@ -164,6 +170,24 @@ void ABossDesignCharacter::curBossBoneBroken()
 	if(!bossInstance || !bossWidgetInstance) return;
 
 	bossInstance->BreakLeftArm();
+}
+
+void ABossDesignCharacter::curBossInteract()
+{
+	//테스트용으로 보스 사망시 true 전달 후 false로 전환되기 때문에 true 상태에선 return 되도록 처리
+	if(!bossInstance || !bossWidgetInstance || bIsBossDeath) return;
+
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Cyan, TEXT("Loot Head Gear"));
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Cyan, TEXT("Loot Iron"));
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Cyan, TEXT("Loot Horse Parts"));
+
+	FTimerHandle deathTimer;
+	GetWorldTimerManager().SetTimer(deathTimer, [&]
+	{
+		bossInstance->Destroy();
+		bossWidgetInstance->RemoveFromParent();
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Destroyed Boss"));
+	}, 2.f, false);
 }
 
 void ABossDesignCharacter::SetBossWidget(AEnemy_Boss *inBoss)

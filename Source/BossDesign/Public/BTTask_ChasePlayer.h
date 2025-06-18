@@ -17,5 +17,5 @@ public :
 	explicit UBTTask_ChasePlayer(FObjectInitializer const& ObjectInitializer);
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
-
+	const float distance = 100.f;
 };

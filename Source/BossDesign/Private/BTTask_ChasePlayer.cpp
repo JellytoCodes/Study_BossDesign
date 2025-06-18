@@ -44,8 +44,6 @@ EBTNodeResult::Type UBTTask_ChasePlayer::ExecuteTask(UBehaviorTreeComponent& Own
     
     float curDist = FVector::Dist(bossLocation, playerLocation);
 
-    float distance = 100.f;
-
     if(curDist > distance)
     {  
         FVector dirToPlayer = (playerLocation - bossLocation).GetSafeNormal();

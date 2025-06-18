@@ -3,17 +3,31 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AIController.h"
+#include "Components/WidgetComponent.h"
+
+/** -------------------------------------------------------------------------- */
 
 AEnemy_Boss::AEnemy_Boss()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
+	lootWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("LootWidget"));
+	lootWidgetComponent->SetupAttachment(RootComponent);
+	lootWidgetComponent->SetWidgetSpace(EWidgetSpace::World);
+	lootWidgetComponent->SetDrawAtDesiredSize(true);
+	lootWidgetComponent->SetRelativeLocation(FVector(0.f, 0.f, 100.f));
+
+	static ConstructorHelpers::FClassFinder<UUserWidget> 
+	lootWidgetAssset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Enemy/WBP_LootWidget.WBP_LootWidget_C'"));
+
+	if(lootWidgetAssset.Succeeded()) lootWidgetComponent->SetWidgetClass(lootWidgetAssset.Class);
 }
 
 void AEnemy_Boss::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if(lootWidgetComponent) lootWidgetComponent->SetVisibility(false);
 }
 
 void AEnemy_Boss::WeaknessDestroy()
@@ -40,11 +54,12 @@ void AEnemy_Boss::BossDead(bool isDeath)
 {
 	bIsDeath = isDeath;
 	AAIController* AICon = Cast<AAIController>(GetController());
-	if(AICon)
-	{
-		AICon->GetBlackboardComponent()->SetValueAsBool("bIsDeath", bIsDeath);
-	}
+	if(!AICon) return;
 	
+	AICon->GetBlackboardComponent()->SetValueAsBool("bIsDeath", bIsDeath);
+	
+	if(!lootWidgetComponent) return;
+	lootWidgetComponent->SetVisibility(true);
 }
 
 void AEnemy_Boss::BreakLeftArm()
