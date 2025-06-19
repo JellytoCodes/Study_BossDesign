@@ -40,19 +40,20 @@ BehaviorTree를 활용하여 보스 캐릭터의 전투 패턴을 **Phase** 단�
 | **재생 조건 제어**    | `Blackboard Bool` 사용하여 1회만 재생 처리                  |
 | **확장 계획**       | `LevelSequence`, Niagara 등도 연출 Task에 포함 예정        |
 
-
 <br>
 
 ## ⚔️ 전투 중 상태 변화 처리
 
 Groggy 상태:  
-약점 공격 또는 누적 데미지 발생 시 AIController에서 강제 전환  
+→ 약점 공격 또는 누적 데미지 발생 시 AIController에서 강제 전환  
 → bIsGroggy Blackboard Key로 BT 차단  
-→ 상태 회복 후 다시 루트 트리 진입 가능  
+→ 상태 회복 후 루트 트리 재진입  
+→ 파괴된 부위에 따라 행동 패턴 제약 발생
   
 Death 처리:  
-HP가 0이 되면 BT 내부 트리를 완전히 변경  
-애니메이션 및 연출 종료 후 Pawn Destroy 가능  
+→ HP가 0이 되면 BT 내부 트리를 완전히 변경  
+→ 애니메이션 및 연출  
+→ 플레이어가 전리품 습득 시 Pawn Destroy  
 
 ## 🧑‍💻 Author  
 JellytoCodes / 2025.06  
