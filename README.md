@@ -4,7 +4,9 @@
 <br>
 
 ## 🧠 개요
-BehaviorTree를 활용하여 보스 캐릭터의 전투 패턴을 **Phase** 단위로 구조화하고 유연하게 확장 가능한 AI 구조를 설계하는 것을 목표로 합니다.
+BehaviorTree를 활용하여 보스 캐릭터의 전투 패턴을 **Phase** 단위로 구조화하고 확장 가능한 AI 구조를 설계하는 것을 목표로 합니다.
+
+**Boss는 Fab에 있는 Paragon : Iggy&Scorch를 사용**
 
 <br>
 
