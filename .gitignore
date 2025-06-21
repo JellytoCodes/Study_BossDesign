@@ -1,19 +1,37 @@
-# Unreal Engine 불필요 폴더
-Binaries/
-DerivedDataCache/
-Intermediate/
-Saved/
-Windows/
+#################################################
+# Unreal Engine – 생성/캐시/빌드 산출물
+#################################################
+/Binaries/**                 # 플랫폼별 DLL · exe
+/DerivedDataCache/**         # DDC
+/Intermediate/**             # UHT, UBTool 결과
+/Saved/**                    # Autosave·Log 포함
+/Build/Android/**            # 패키징 산출물
+/Build/IOS/**
+/Build/Windows*/**           # Win64, WindowsNoEditor 등
 
-# Visual Studio 관련
+#################################################
+# IDE & 빌드 시스템
+#################################################
 .vs/
-.vscode/
-*.sln
+/.vscode/
+/.idea/                     # JetBrains Rider
+*.sln                       # 필요하면 주석 처리해 커밋
 *.VC.db
+*.VC.opendb
+*.opensdf
+*.ipch
 *.log
 *.tmp
 *.user
+*.suo
 
-# OS 임시파일
+#################################################
+# OS & 툴 임시파일
+#################################################
 .DS_Store
 Thumbs.db
+
+#################################################
+# 외부 무료 자산(수정 없는 원본) – Fab 재다운로드용
+#################################################
+/Content/ParagonIggyScorch/**    # <-- **슬래시·와일드카드 필수**
