@@ -64,23 +64,21 @@ void AEnemy_Boss::BossDead(bool isDeath)
 
 void AEnemy_Boss::BreakLeftArm()
 {
-	FName boneName = TEXT("upperarm_l");
-
 	USkeletalMeshComponent* brokenMesh = GetMesh();
 
 	if(brokenMesh)
 	{
 		brokenMesh->HideBoneByName(boneName, EPhysBodyOp::PBO_None);
 
-		FVector SpawnLocation = brokenMesh->GetBoneLocation(TEXT("hand_l"));
+		FVector SpawnLocation = brokenMesh->GetBoneLocation(boneName);
 		FRotator SpawnRotation = FRotator::ZeroRotator;
 
-		if(!dropLeftArmClass) return;
+		if(!dropBoneActorClass) return;
 
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 
-		AActor* Spawned = GetWorld()->SpawnActor<AActor>(dropLeftArmClass, SpawnLocation, FRotator::ZeroRotator);
+		AActor* Spawned = GetWorld()->SpawnActor<AActor>(dropBoneActorClass, SpawnLocation, FRotator::ZeroRotator);
 		if(!Spawned) return;
 		
 		if(UStaticMeshComponent* spawnedMesh = Spawned->FindComponentByClass<UStaticMeshComponent>()) spawnedMesh->SetSimulatePhysics(true);

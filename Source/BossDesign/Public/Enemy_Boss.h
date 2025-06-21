@@ -30,10 +30,13 @@ private :
 	float curHealth = 0.f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "BrokenPoint", meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<AActor> dropLeftArmClass;
+	TSubclassOf<AActor> dropBoneActorClass;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "LootWidget", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UWidgetComponent> lootWidgetComponent;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "BrokenPoint", meta = (AllowPrivateAccess = "true"))
+	FName boneName = TEXT("upperarm_l");
 
 public :
 	float GetMaxHealth() const { return maxHealth; }
